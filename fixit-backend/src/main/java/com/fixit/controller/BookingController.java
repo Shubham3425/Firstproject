@@ -22,9 +22,16 @@ public class BookingController {
     }
 
     @GetMapping("/my")
-    public ResponseEntity<List<Booking>> myBookings(Authentication auth) {
-        return ResponseEntity.ok(bookingService.getMyBookings(auth.getName()));
-    }
+public ResponseEntity<List<Booking>> myBookings(Authentication auth) {
+    return ResponseEntity.ok(bookingService.getMyBookings(auth.getName()));
+}
+
+@GetMapping("/worker/my")
+public ResponseEntity<List<Booking>> workerBookings(Authentication auth) {
+    return ResponseEntity.ok(
+            bookingService.getWorkerBookings(auth.getName())
+    );
+}
 
     @GetMapping("/{id}")
     public ResponseEntity<Booking> getBooking(@PathVariable Long id) {

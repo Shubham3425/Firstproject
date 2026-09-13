@@ -41,6 +41,20 @@ public class BookingService {
     }
 
     public Booking getById(Long id) {
-        return bookingRepository.findById(id).orElseThrow(() -> new RuntimeException("Booking not found"));
-    }
+    
+    return bookingRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Booking not found"));
+}
+
+public List<Booking> getWorkerBookings(String email) {
+
+    User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+
+    Worker worker = workerRepository.findByUserId(user.getId())
+            .orElseThrow(() -> new RuntimeException("Worker not found"));
+
+    return bookingRepository
+            .findByWorkerIdOrderByCreatedAtDesc(worker.getId());
+}
 }
